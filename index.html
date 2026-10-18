@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Radar de Antojos</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Radar de Antojos</h1>
+      <button id="toggle-vendor-mode" class="btn-primary">Modo Vendedor</button>
+    </header>
+    <main id="map" style="height: 400px; width: 100%;"></main>
+    <footer class="bottom-sheet">
+      <p id="status-text">Buscando comida cerca de ti...</p>
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
