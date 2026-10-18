@@ -12,17 +12,17 @@
   <!-- VISTA 1: INICIO / PERFIL DEL VENDEDOR -->
   <section id="view-home" class="view active">
     <header class="calleo-header">
-      <h1>Calle<span>📍</span></h1>
+      <h1>Calle<span style="color:#D05B39;">📍</span></h1>
     </header>
     
     <div class="content-scroll">
       <div class="hero-image">
-        <img src="https://images.unsplash.com/photo-1633423719875-fcfbfce90382?q=80&w=600&auto=format&fit=crop" alt="Arepas">
+        <img src="https://images.unsplash.com/photo-1551782450-17144efb9c50?q=80&w=600&auto=format&fit=crop" alt="Arepas" onerror="this.src='https://via.placeholder.com/600x200?text=Arepas'">
       </div>
       
       <div class="vendor-header">
         <h2>Arepas Don Leo</h2>
-        <p class="rating">⭐ <strong>4.7 opinión</strong> <span class="reviews">(120 reseñas)</span></p>
+        <p class="rating">⭐ <strong style="color: #B8862D;">4.7 opinión</strong> <span class="reviews">(120 reseñas)</span></p>
       </div>
 
       <div class="mini-map-card">
@@ -36,19 +36,29 @@
       <h3 class="section-title">Menú destacado</h3>
       <div class="horizontal-scroll">
         <div class="menu-card" onclick="openProduct('Arepa de Pabellón', 16500)">
-          <img src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?q=80&w=300&auto=format&fit=crop" alt="Pabellon">
+          <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?q=80&w=300&auto=format&fit=crop" alt="Arepa" onerror="this.src='https://via.placeholder.com/300x200?text=Arepa'">
           <h4>Arepa de Pabellón<br>($16.500 COP)</h4>
           <p>Arepa de maíz rellena de carne, caraotas, plátano frito y queso.</p>
         </div>
         <div class="menu-card" onclick="openProduct('Empanada de Carne', 8000)">
-          <img src="https://images.unsplash.com/photo-1606496468452-f54210ab78f7?q=80&w=300&auto=format&fit=crop" alt="Empanada">
+          <img src="https://images.unsplash.com/photo-1626074961596-f0c9780a4fb7?q=80&w=300&auto=format&fit=crop" alt="Empanada" onerror="this.src='https://via.placeholder.com/300x200?text=Empanada'">
           <h4>Empanada de Carne<br>($8.000 COP)</h4>
           <p>Crujiente empanada frita rellena de carne de res molida.</p>
         </div>
         <div class="menu-card" onclick="openProduct('Tequeños', 14000)">
-          <img src="https://images.unsplash.com/photo-1644341913961-d70377c8657f?q=80&w=300&auto=format&fit=crop" alt="Tequeños">
+          <img src="https://images.unsplash.com/photo-1628205470729-28c03cbfb33c?q=80&w=300&auto=format&fit=crop" alt="Tequeños" onerror="this.src='https://via.placeholder.com/300x200?text=Tequeños'">
           <h4>Tequeños (5 uds)<br>($14.000 COP)</h4>
-          <p>Bastones de masa rellenos de queso blanco fundido.</p>
+          <p>Bastones de masa rellenos de queso blanco fundido y salsa.</p>
+        </div>
+         <div class="menu-card" onclick="openProduct('Arepa de Queso', 10000)">
+          <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=300&auto=format&fit=crop" alt="Arepa Queso" onerror="this.src='https://via.placeholder.com/300x200?text=Arepa+Queso'">
+          <h4>Arepa de Queso<br>($10.000 COP)</h4>
+          <p>Clásica arepa asada al carbón, rebosante de queso doble crema fundido.</p>
+        </div>
+        <div class="menu-card" onclick="openProduct('Patacón Con Todo', 18000)">
+          <img src="https://images.unsplash.com/photo-1599818818579-2d4e8c1583d9?q=80&w=300&auto=format&fit=crop" alt="Patacon" onerror="this.src='https://via.placeholder.com/300x200?text=Patacon'">
+          <h4>Patacón Con Todo<br>($18.000 COP)</h4>
+          <p>Plátano verde frito coronado con carne, pollo, hogao, aguacate y queso.</p>
         </div>
       </div>
 
@@ -65,6 +75,16 @@
           <div class="reviewer"><strong>Carlos R.</strong></div>
           <div class="stars">⭐⭐⭐⭐⭐</div>
           <p>"Empanadas deliciosas y crujientes."</p>
+        </div>
+        <div class="review-card">
+          <div class="reviewer"><strong>Andrés F.</strong></div>
+          <div class="stars">⭐⭐⭐⭐☆</div>
+          <p>"El sabor es increíble, aunque la fila a veces es un poco larga."</p>
+        </div>
+        <div class="review-card">
+          <div class="reviewer"><strong>Juliana P.</strong></div>
+          <div class="stars">⭐⭐☆☆☆</div>
+          <p>"Pedí una arepa sin queso y le echaron extra queso. Un descuido."</p>
         </div>
       </div>
     </div>
@@ -104,6 +124,85 @@
     </div>
   </section>
 
+  <!-- VISTA 3: MIS COMPRAS -->
+  <section id="view-compras" class="view">
+    <header class="calleo-header">
+      <h1>Mis Compras</h1>
+    </header>
+    <div class="content-scroll">
+      <div class="purchase-history">
+        <div class="purchase-item" onclick="showInvoice('Arepas Don Leo', '18 de Oct, 2026', '19:30', 'Nequi', '$16.500')">
+          <div class="purchase-info">
+             <h4>Arepas Don Leo</h4>
+             <p>1x Arepa de Pabellón</p>
+             <p class="date">18 Oct 2026</p>
+          </div>
+          <div class="purchase-price">$16.500</div>
+        </div>
+        <div class="purchase-item" onclick="showInvoice('Empanadas El Kiosko', '15 de Oct, 2026', '21:15', 'Tarjeta de Crédito', '$12.000')">
+           <div class="purchase-info">
+             <h4>Empanadas El Kiosko</h4>
+             <p>1x Empanada Carne, 1x Avena</p>
+             <p class="date">15 Oct 2026</p>
+          </div>
+          <div class="purchase-price">$12.000</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- VISTA 4: GUARDADOS -->
+  <section id="view-guardados" class="view">
+    <header class="calleo-header">
+      <h1>Guardados</h1>
+    </header>
+    <div class="content-scroll">
+      <div class="saved-items-grid">
+         <div class="menu-card" onclick="openProduct('Arepa de Pabellón', 16500)">
+          <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?q=80&w=300&auto=format&fit=crop" alt="Arepa">
+          <h4>Arepa de Pabellón<br>($16.500 COP)</h4>
+          <p>Arepas Don Leo</p>
+        </div>
+         <div class="menu-card" onclick="openProduct('Choriperro', 11000)">
+          <img src="https://images.unsplash.com/photo-1594212686154-8c8802d08a50?q=80&w=300&auto=format&fit=crop" alt="Choriperro">
+          <h4>Choriperro<br>($11.000 COP)</h4>
+          <p>El Chori</p>
+        </div>
+        <div class="menu-card" onclick="openProduct('Burger Clásica', 12000)">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=300&auto=format&fit=crop" alt="Burger">
+          <h4>Burger Clásica<br>($12.000 COP)</h4>
+          <p>Hamburguesas El Gordo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- VISTA 5: MI PERFIL -->
+  <section id="view-perfil" class="view">
+    <header class="calleo-header">
+      <h1>Mi Perfil</h1>
+    </header>
+    <div class="content-scroll">
+      <div class="profile-header-container">
+        <div class="profile-avatar">🦉</div>
+        <h2>Carlos Comensal</h2>
+        <p class="title-badge">Catador Nocturno</p>
+      </div>
+      <div class="profile-details-card">
+         <p><strong>Celular:</strong> +57 300 123 4567</p>
+         <p><strong>Dirección:</strong> Cra 15 # 85-22, Bogotá</p>
+         <p><strong>Método de pago:</strong> Nequi (***4567)</p>
+         <button class="btn-outline">Editar Información</button>
+      </div>
+      <h3 class="section-title">Insignias</h3>
+       <div class="badges-grid">
+        <div class="badge">🔥<span>Caza-Salsas</span></div>
+        <div class="badge">🗺️<span>Explorador</span></div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- PANTALLA VERDE: Datáfono Virtual Antifraude -->
   <div id="success-screen" class="full-screen-success">
     <h1>✅</h1>
@@ -115,18 +214,33 @@
     <button class="btn-dark" onclick="closeSuccessScreen()">Volver al Inicio</button>
   </div>
 
+   <!-- MODAL DE FACTURA -->
+  <div id="invoice-modal" class="modal-overlay">
+    <div class="invoice-content">
+       <span class="close-btn" onclick="closeInvoice()">&times;</span>
+       <h2>Recibo de Compra</h2>
+       <hr>
+       <p><strong>Local:</strong> <span id="inv-vendor"></span></p>
+       <p><strong>Fecha:</strong> <span id="inv-date"></span></p>
+       <p><strong>Hora:</strong> <span id="inv-time"></span></p>
+       <p><strong>Método de Pago:</strong> <span id="inv-method"></span></p>
+       <hr>
+       <h3 style="text-align:center; margin-top:10px;">Total: <span id="inv-total" style="color:#D05B39"></span></h3>
+    </div>
+  </div>
+
   <!-- NAVEGACIÓN INFERIOR -->
   <nav class="bottom-nav">
-    <div class="nav-item active" onclick="goHome()">
+    <div class="nav-item active" onclick="switchView('view-home', this)">
       <div class="icon">🏠</div><span>Inicio</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="switchView('view-compras', this)">
       <div class="icon">🛍️</div><span>Mis compras</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="switchView('view-guardados', this)">
       <div class="icon">🔖</div><span>Guardados</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="switchView('view-perfil', this)">
       <div class="icon">😊</div><span>Mi perfil</span>
     </div>
   </nav>
