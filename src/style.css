@@ -1,7 +1,26 @@
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-body { background-color: #f4f4f9; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-.app-header { background-color: #ff4757; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
-.btn-primary { background-color: white; color: #ff4757; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; }
-.btn-primary.active { background-color: #2ed573; color: white; }
-#map { flex-grow: 1; width: 100%; }
-.bottom-sheet { background-color: white; padding: 20px; border-radius: 20px 20px 0 0; text-align: center; font-weight: bold; z-index: 1000; }
+/* Paleta: Marrón oscuro (#4A3022), Crema (#F7F3E9), Terracota (#A34A33) */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
+body { background-color: #F7F3E9; display: flex; flex-direction: column; height: 100vh; overflow: hidden; color: #4A3022; }
+
+.app-header { background-color: #4A3022; color: #F7F3E9; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.app-header h1 { font-size: 1.3rem; font-weight: 500; letter-spacing: 0.5px; }
+
+.btn-primary { background-color: #A34A33; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+.btn-primary.active { background-color: #5C7054; } /* Verde oliva elegante para modo vendedor */
+
+#map { flex-grow: 1; width: 100%; z-index: 1; }
+.bottom-sheet { background-color: white; padding: 15px; border-top: 1px solid #e0dcd2; text-align: center; font-weight: 500; font-size: 0.9rem; z-index: 1000; }
+
+/* Estilos de la ventana del menú */
+.modal { position: absolute; bottom: 0; left: 0; width: 100%; height: 65%; background: white; z-index: 2000; border-radius: 25px 25px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.15); transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
+.modal.show { transform: translateY(0); }
+.modal-content { padding: 25px; overflow-y: auto; height: 100%; position: relative; }
+
+.close-btn { position: absolute; right: 25px; top: 20px; font-size: 28px; font-weight: bold; cursor: pointer; color: #a09d96; }
+.vendor-info { display: flex; gap: 15px; margin: 8px 0 25px; font-size: 0.95rem; color: #7a766c; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+
+.menu-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #f0ece1; }
+.menu-item h4 { color: #4A3022; font-weight: 500; }
+.menu-item p { color: #A34A33; font-weight: bold; }
+
+.order-button { width: 100%; margin-top: 25px; padding: 15px; font-size: 1.1rem; border-radius: 10px; }
