@@ -1,0 +1,7 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+body { background-color: #f4f4f9; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+.app-header { background-color: #ff4757; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+.btn-primary { background-color: white; color: #ff4757; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+.btn-primary.active { background-color: #2ed573; color: white; }
+#map { flex-grow: 1; width: 100%; }
+.bottom-sheet { background-color: white; padding: 20px; border-radius: 20px 20px 0 0; text-align: center; font-weight: bold; z-index: 1000; }
