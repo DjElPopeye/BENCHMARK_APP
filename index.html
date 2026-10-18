@@ -12,9 +12,27 @@
       <h1>Radar de Antojos</h1>
       <button id="toggle-vendor-mode" class="btn-primary">Modo Vendedor</button>
     </header>
-    <main id="map" style="height: 400px; width: 100%;"></main>
+    
+    <main id="map"></main>
+
+    <!-- Ventana emergente del menú del vendedor -->
+    <div id="vendor-modal" class="modal">
+      <div class="modal-content">
+        <span id="close-modal" class="close-btn">&times;</span>
+        <h2 id="vendor-name">Nombre</h2>
+        <div class="vendor-info">
+          <span id="vendor-rating">⭐ 0.0</span>
+          <span id="vendor-type">Categoría</span>
+        </div>
+        <div id="vendor-menu" class="menu-list">
+          <!-- Aquí se inyectarán los platos desde el JavaScript -->
+        </div>
+        <button id="order-btn" class="btn-primary order-button">Pedir ahora</button>
+      </div>
+    </div>
+
     <footer class="bottom-sheet">
-      <p id="status-text">Buscando comida cerca de ti...</p>
+      <p id="status-text">Explorando antojos en Bogotá...</p>
     </footer>
     <script type="module" src="/src/main.js"></script>
   </body>
