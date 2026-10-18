@@ -1,60 +1,62 @@
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
-body { background-color: #121212; color: #FFFFFF; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+/* Paleta basada en la imagen: Fondo Crema (#F9F6F0), Textos Dorados/Marrón (#B8862D), Botones Terracota (#D05B39) */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background-color: #F9F6F0; color: #333; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-/* Navegación y Estructura */
-.tab-view { display: none; height: 100%; width: 100%; padding-bottom: 70px; overflow-y: auto; }
-.tab-view.active { display: block; }
-.bottom-nav { position: fixed; bottom: 0; width: 100%; background: #1A1A1A; display: flex; justify-content: space-around; padding: 10px 0 20px 0; border-top: 1px solid #333; z-index: 3000; }
-.nav-item { background: none; border: none; font-size: 0.8rem; color: #666; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: 0.2s; }
-.nav-item.active { color: #FFDB58; text-shadow: 0 0 10px rgba(255, 219, 88, 0.5); font-weight: bold; transform: translateY(-2px); }
+/* Vistas */
+.view { display: none; height: 100%; width: 100%; padding-bottom: 80px; flex-direction: column; }
+.view.active { display: flex; }
+.content-scroll { overflow-y: auto; padding: 0 20px; }
 
-/* Mapa y Buscador Flotante */
-#map { height: 100%; width: 100%; z-index: 1; }
-.top-search-bar { position: absolute; top: 15px; left: 5%; width: 90%; z-index: 1000; }
-.top-search-bar input { width: 100%; padding: 15px; border-radius: 25px; border: none; background: rgba(26, 26, 26, 0.9); color: white; font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #333; }
+/* Header Calleo */
+.calleo-header { padding: 15px 20px; }
+.calleo-header h1 { font-size: 1.8rem; color: #333; display: flex; align-items: center; gap: 5px; }
 
-/* Botones Neón e Interacciones */
-.btn-neon { background: #FF4500; color: white; border: none; padding: 16px 20px; border-radius: 25px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4); transform: scale(1); transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); margin-top: 15px; }
-.btn-neon:active { transform: scale(0.95); }
-.btn-neon.small { padding: 10px; font-size: 0.9rem; }
-.btn-dark { background: #1A1A1A; color: white; border: 2px solid #333; padding: 12px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+/* Tarjetas y Contenido */
+.hero-image img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; }
+.vendor-header { margin: 15px 0; }
+.vendor-header h2 { color: #B8862D; font-size: 1.6rem; }
+.rating { color: #B8862D; font-size: 0.9rem; margin-top: 5px; }
+.reviews { color: #999; }
 
-/* Tipografía Neón */
-.neon-text-magenta { color: #FF00FF; text-shadow: 0 0 8px rgba(255, 0, 255, 0.6); }
-.price-highlight { color: #FFDB58; font-weight: bold; font-size: 1.2rem; }
+.mini-map-card { background: white; padding: 15px; border-radius: 15px; display: flex; gap: 15px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+.section-title { color: #B8862D; font-size: 1.3rem; margin: 20px 0 10px; }
 
-/* Tarjetas y Feed */
-.header-banner { padding: 20px; background: #1A1A1A; border-bottom: 1px solid #333; }
-.filter-chips { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; }
-.chip { background: #2A2A2A; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; white-space: nowrap; border: 1px solid #444; }
-.feed-container { padding: 15px; display: flex; flex-direction: column; gap: 15px; }
-.vendor-card { background: #1A1A1A; border-radius: 15px; padding: 15px; border-left: 4px solid #FF00FF; }
+/* Scroll Horizontal (Menú y Reseñas) */
+.horizontal-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; }
+.menu-card { min-width: 140px; background: white; border-radius: 15px; padding: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); scroll-snap-align: start; text-align: center; }
+.menu-card img { width: 100%; height: 80px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+.menu-card h4 { font-size: 0.85rem; margin-bottom: 5px; }
+.menu-card p { font-size: 0.65rem; color: #666; }
 
-/* Gamificación y Recompensas */
-.badges-container { padding: 20px; }
-.badges-grid { display: flex; gap: 15px; margin-top: 10px; }
-.badge { background: #2A2A2A; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #FFDB58; box-shadow: 0 0 10px rgba(255, 219, 88, 0.1); }
-.badge.locked { opacity: 0.4; border-color: #444; box-shadow: none; filter: grayscale(100%); }
-.rewards-container { padding: 15px; }
-.reward-card, .coupon-card { background: #1A1A1A; padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #333; }
-.progress-bar { background: #333; height: 20px; border-radius: 10px; margin-top: 15px; overflow: hidden; }
-.progress { background: linear-gradient(90deg, #FF00FF, #FF4500); height: 100%; text-align: center; font-size: 0.8rem; line-height: 20px; font-weight: bold; }
+.review-card { min-width: 200px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
 
-/* Modales Oscuros */
-.modal { position: absolute; bottom: 0; left: 0; width: 100%; height: 85%; background: #121212; z-index: 4000; border-radius: 25px 25px 0 0; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; border-top: 2px solid #333; }
-.modal.show { transform: translateY(0); }
-.modal-content { padding: 25px; overflow-y: auto; height: 100%; position: relative; }
-.close-btn { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #888; }
-.menu-item { background: #1A1A1A; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2A2A2A; }
+/* Botones */
+.btn-primary { background-color: #D05B39; color: white; border: none; padding: 15px; border-radius: 15px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; transition: transform 0.1s; margin: 15px 0; }
+.btn-primary:active { transform: scale(0.96); }
+.btn-red { background-color: #FF4A4A; display: flex; justify-content: space-between; align-items: center; padding: 20px; border-radius: 20px; }
 
-/* Controles Arma tu Plato */
-.customization-section { margin: 20px 0; }
-.control-row { display: flex; justify-content: space-between; align-items: center; background: #1A1A1A; padding: 15px; border-radius: 12px; margin-bottom: 10px; }
-.delivery-toggle { background: #1A1A1A; padding: 15px; border-radius: 12px; margin: 20px 0; display: flex; flex-direction: column; gap: 10px; border: 1px solid #FFDB58; }
+/* Mapa y Rutas */
+#main-map { height: 100%; width: 100%; z-index: 1; }
+.btn-back { position: absolute; top: 20px; left: 20px; background: #C89B3C; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; z-index: 1000; cursor: pointer; }
 
-/* Fila Virtual y Pantalla Verde Antifraude */
-.pickup-screen { background: #FF00FF; color: white; padding: 30px; border-radius: 20px; text-align: center; font-weight: bold; animation: pulse 2s infinite; margin-top: 20px; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 0, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); } }
+/* Bottom Sheets (Ventanas inferiores sobre el mapa) */
+.bottom-sheet { position: absolute; bottom: 80px; left: 5%; width: 90%; background: #F9F6F0; z-index: 1000; border-radius: 25px; padding: 20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); display: none; flex-direction: column; }
+.bottom-sheet.active { display: flex; animation: slideUp 0.3s ease-out; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.sheet-handle { width: 40px; height: 5px; background: #ccc; border-radius: 5px; margin: 0 auto 15px; }
+.sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; }
+.time-eta { color: #666; font-size: 0.9rem; }
+.item-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 500; font-size: 0.95rem; }
 
-.full-screen-success { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #00FF00; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: black; }
+/* Navegación Inferior */
+.bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 15px 0 25px 0; border-top: 1px solid #eee; z-index: 3000; }
+.nav-item { display: flex; flex-direction: column; align-items: center; color: #999; font-size: 0.75rem; cursor: pointer; }
+.nav-item.active { color: #B8862D; font-weight: bold; }
+.nav-item .icon { font-size: 1.5rem; margin-bottom: 3px; }
+
+/* Pantalla Antifraude (Requisito del texto) */
+.full-screen-success { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #00E676; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: black; padding: 20px; }
 .full-screen-success.show { display: flex; }
+.full-screen-success h1 { font-size: 5rem; margin-bottom: 10px; }
+.split-text { font-weight: bold; background: rgba(255,255,255,0.5); padding: 5px 15px; border-radius: 15px; margin-top: 10px; }
+.btn-dark { background: #1A1A1A; color: white; border: none; padding: 15px 30px; border-radius: 20px; font-weight: bold; margin-top: 30px; cursor: pointer; }
