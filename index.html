@@ -3,124 +3,132 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Radar de Antojos</title>
+  <title>Calleo - Comida Callejera</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
-  <!-- Pestaña 1: EXPLORAR (Mapa Principal) -->
-  <section id="tab-explorar" class="tab-view active">
-    <div class="top-search-bar">
-      <input type="text" placeholder="¿Qué antojo tienes hoy?" disabled>
-    </div>
-    <div id="map"></div>
-  </section>
-
-  <!-- Pestaña 2: BUSCAR (Catálogo y Filtros) -->
-  <section id="tab-buscar" class="tab-view">
-    <div class="header-banner">
-      <h2>🔥 Zona Piloto: Chapinero</h2>
-      <div class="filter-chips">
-        <span class="chip">🍔 Hamburguesas</span>
-        <span class="chip">🥟 Fritos</span>
-        <span class="chip">🍕 Bajón</span>
-      </div>
-    </div>
-    <div id="feed-vendedores" class="feed-container"></div>
-  </section>
-
-  <!-- Pestaña 3: MI PEDIDO (Fila Virtual) -->
-  <section id="tab-pedido" class="tab-view">
-    <div class="header-banner"><h2>Mi Pedido</h2></div>
-    <div id="active-order-container" class="empty-state">
-      <p>No tienes antojos en camino.</p>
-    </div>
-  </section>
-
-  <!-- Pestaña 4: RECOMPENSAS (La Ñapa Digital) -->
-  <section id="tab-recompensas" class="tab-view">
-    <div class="header-banner"><h2>🎁 La Ñapa Digital</h2></div>
-    <div class="rewards-container">
-      <div class="reward-card">
-        <h3>El Choriperro 🌭</h3>
-        <p>Compra 6, el 7º es gratis.</p>
-        <div class="progress-bar"><div class="progress" style="width: 66%;">4/6</div></div>
-      </div>
-      <div class="coupon-card">
-        <h3>🎟️ Cupón Nocturno</h3>
-        <p>Gaseosa a $1.000 llevando Hamburguesa.</p>
-        <button class="btn-neon small">Usar ahora</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pestaña 5: PERFIL (Gamificación y Pagos) -->
-  <section id="tab-perfil" class="tab-view">
-    <div class="profile-header">
-      <div class="profile-avatar">🦉</div>
-      <h2>Carlos Comensal</h2>
-      <p class="neon-text-magenta">Catador Nocturno Nivel 5</p>
-    </div>
-    <div class="badges-container">
-      <h3>Tus Insignias</h3>
-      <div class="badges-grid">
-        <div class="badge">🔥<span>Caza-Salsas</span></div>
-        <div class="badge">🗺️<span>Explorador</span></div>
-        <div class="badge locked">👑<span>Rey del Bajón</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modal: Menú del Vendedor -->
-  <div id="vendor-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('vendor-modal')">&times;</span>
-      <h2 id="vendor-name">Nombre</h2>
-      <div class="vendor-badges" id="vendor-badges"></div>
-      <div id="vendor-menu" class="menu-list"></div>
-    </div>
-  </div>
-
-  <!-- Modal: Arma Tu Plato -->
-  <div id="customize-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('customize-modal')">&times;</span>
-      <h2 id="product-name">Producto</h2>
-      <p id="product-price" class="price-highlight"></p>
-      
-      <div class="customization-section">
-        <h3>Adicionales (Costo extra)</h3>
-        <div id="paid-extras"></div>
-        
-        <h3 style="margin-top:20px;">Modificadores (Gratis)</h3>
-        <div id="free-modifiers"></div>
+  
+  <!-- VISTA 1: INICIO / PERFIL DEL VENDEDOR -->
+  <section id="view-home" class="view active">
+    <header class="calleo-header">
+      <h1>Calle<span>📍</span></h1>
+    </header>
+    
+    <div class="content-scroll">
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1633423719875-fcfbfce90382?q=80&w=600&auto=format&fit=crop" alt="Arepas">
       </div>
       
-      <div class="delivery-toggle">
-        <label><input type="radio" name="delivery-type" value="pickup" checked> 🚶‍♂️ Pick-Up (Fila Virtual)</label>
-        <label><input type="radio" name="delivery-type" value="delivery"> 🏍️ Delivery (+$4.000)</label>
+      <div class="vendor-header">
+        <h2>Arepas Don Leo</h2>
+        <p class="rating">⭐ <strong>4.7 opinión</strong> <span class="reviews">(120 reseñas)</span></p>
       </div>
-      <button id="confirm-order-btn" class="btn-neon">Pagar con Bre-B / Nequi</button>
-    </div>
-  </div>
 
-  <!-- Pantalla Verde Antifraude (Datáfono Virtual) -->
+      <div class="mini-map-card">
+        <div class="mini-map-img">📍</div>
+        <div class="mini-map-text">
+          <strong>Ubicación: Mini... Arepas Don Leo.</strong><br>
+          Cl. 9 #4-20, La Candelaria, Bogotá.
+        </div>
+      </div>
+
+      <h3 class="section-title">Menú destacado</h3>
+      <div class="horizontal-scroll">
+        <div class="menu-card" onclick="openProduct('Arepa de Pabellón', 16500)">
+          <img src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?q=80&w=300&auto=format&fit=crop" alt="Pabellon">
+          <h4>Arepa de Pabellón<br>($16.500 COP)</h4>
+          <p>Arepa de maíz rellena de carne, caraotas, plátano frito y queso.</p>
+        </div>
+        <div class="menu-card" onclick="openProduct('Empanada de Carne', 8000)">
+          <img src="https://images.unsplash.com/photo-1606496468452-f54210ab78f7?q=80&w=300&auto=format&fit=crop" alt="Empanada">
+          <h4>Empanada de Carne<br>($8.000 COP)</h4>
+          <p>Crujiente empanada frita rellena de carne de res molida.</p>
+        </div>
+        <div class="menu-card" onclick="openProduct('Tequeños', 14000)">
+          <img src="https://images.unsplash.com/photo-1644341913961-d70377c8657f?q=80&w=300&auto=format&fit=crop" alt="Tequeños">
+          <h4>Tequeños (5 uds)<br>($14.000 COP)</h4>
+          <p>Bastones de masa rellenos de queso blanco fundido.</p>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="goToMapRoute()">¿Cómo llegar?</button>
+
+      <h3 class="section-title">Reseñas de clientes</h3>
+      <div class="horizontal-scroll" style="margin-bottom: 20px;">
+        <div class="review-card">
+          <div class="reviewer"><strong>María G.</strong></div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"¡Las mejores arepas de la zona!"</p>
+        </div>
+        <div class="review-card">
+          <div class="reviewer"><strong>Carlos R.</strong></div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Empanadas deliciosas y crujientes."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISTA 2: MAPA DE RUTA Y CHECKOUT (Fila Virtual) -->
+  <section id="view-map" class="view">
+    <button class="btn-back" onclick="goHome()">← Regresar</button>
+    <div id="main-map"></div>
+    
+    <!-- Bottom Sheet 1: Tiempo de distancia -->
+    <div id="sheet-route" class="bottom-sheet active">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3>Tiempo de distancia</h3>
+        <span class="time-eta">⏱ 10 minutos</span>
+      </div>
+      <button class="btn-primary" onclick="showCheckout()">IR A COMPRAR</button>
+    </div>
+
+    <!-- Bottom Sheet 2: Checkout / Arma tu plato -->
+    <div id="sheet-checkout" class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3>Tiempo de espera</h3>
+        <span class="time-eta">⏱ 10 minutos</span>
+      </div>
+      <div class="checkout-items">
+        <div class="item-row"><span>Porción de carne</span><span>1 x $5.500</span></div>
+        <div class="item-row"><span>Porción de plátano frito</span><span>1 x $5.500</span></div>
+        <div class="item-row"><span>Porción de queso</span><span>1 x $5.500</span></div>
+      </div>
+      <button class="btn-primary btn-red" onclick="processPayment()">
+        <span style="float:left">Total a pagar</span>
+        <span style="float:right; font-size:1.3rem;">16.500</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- PANTALLA VERDE: Datáfono Virtual Antifraude -->
   <div id="success-screen" class="full-screen-success">
-    <div class="success-content">
-      <h1 style="font-size: 5rem;">✅</h1>
-      <h2>PAGO APROBADO</h2>
-      <p id="success-amount" style="font-size: 2rem; font-weight: bold;"></p>
-      <p>Orden #<span id="order-number-display" style="color: #FF00FF; font-size: 3rem;"></span></p>
-      <button class="btn-dark" onclick="closeSuccessScreen()">Cerrar</button>
-    </div>
+    <h1>✅</h1>
+    <h2>PAGO APROBADO</h2>
+    <p class="split-text">Bre-B / Nequi</p>
+    <p id="success-amount" style="font-size: 2.5rem; font-weight: bold; margin: 20px 0;"></p>
+    <p>Orden Pick-Up #<span id="order-number-display" style="color: #FF00FF; font-size: 3rem;"></span></p>
+    <p style="margin-top: 20px;">Muestra esta pantalla al vendedor.</p>
+    <button class="btn-dark" onclick="closeSuccessScreen()">Volver al Inicio</button>
   </div>
 
+  <!-- NAVEGACIÓN INFERIOR -->
   <nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchTab('tab-explorar', this)">📍<br>Explorar</button>
-    <button class="nav-item" onclick="switchTab('tab-buscar', this)">🍔<br>Buscar</button>
-    <button class="nav-item" onclick="switchTab('tab-pedido', this)">🧾<br>Pedido</button>
-    <button class="nav-item" onclick="switchTab('tab-recompensas', this)">🎁<br>Premios</button>
-    <button class="nav-item" onclick="switchTab('tab-perfil', this)">👤<br>Perfil</button>
+    <div class="nav-item active" onclick="goHome()">
+      <div class="icon">🏠</div><span>Inicio</span>
+    </div>
+    <div class="nav-item">
+      <div class="icon">🛍️</div><span>Mis compras</span>
+    </div>
+    <div class="nav-item">
+      <div class="icon">🔖</div><span>Guardados</span>
+    </div>
+    <div class="nav-item">
+      <div class="icon">😊</div><span>Mi perfil</span>
+    </div>
   </nav>
 
   <script type="module" src="/src/main.js"></script>
