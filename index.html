@@ -1,39 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Radar de Antojos</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="/src/style.css">
-  </head>
-  <body>
-    <header class="app-header">
-      <h1>Radar de Antojos</h1>
-      <button id="toggle-vendor-mode" class="btn-primary">Modo Vendedor</button>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Radar de Antojos</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Radar de Antojos</h1>
+  </header>
+  
+  <!-- Contenedor Principal -->
+  <main class="app-content">
     
-    <main id="map"></main>
-
-    <!-- Ventana emergente del menú del vendedor -->
-    <div id="vendor-modal" class="modal">
-      <div class="modal-content">
-        <span id="close-modal" class="close-btn">&times;</span>
-        <h2 id="vendor-name">Nombre</h2>
-        <div class="vendor-info">
-          <span id="vendor-rating">⭐ 0.0</span>
-          <span id="vendor-type">Categoría</span>
-        </div>
-        <div id="vendor-menu" class="menu-list">
-          <!-- Aquí se inyectarán los platos desde el JavaScript -->
-        </div>
-        <button id="order-btn" class="btn-primary order-button">Pedir ahora</button>
+    <!-- Pestaña: INICIO -->
+    <section id="tab-inicio" class="tab-view active">
+      <div class="header-banner">
+        <h2>Descubre cerca de ti</h2>
       </div>
-    </div>
+      <div id="feed-vendedores" class="feed-container"></div>
+    </section>
 
-    <footer class="bottom-sheet">
-      <p id="status-text">Explorando antojos en Bogotá...</p>
-    </footer>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    <!-- Pestaña: EXPLORAR (Mapa) -->
+    <section id="tab-explorar" class="tab-view">
+      <div id="map"></div>
+    </section>
+
+    <!-- Pestaña: PERFIL -->
+    <section id="tab-perfil" class="tab-view">
+      <div class="profile-header">
+        <div class="profile-avatar">👤</div>
+        <h2>Carlos Comensal</h2>
+        <p>Amante de la comida callejera</p>
+      </div>
+      <div class="profile-details">
+        <p><strong>Celular:</strong> +57 300 123 4567</p>
+        <p><strong>Dirección:</strong> Cra 15 # 85-22, Bogotá</p>
+        <p><strong>Pedidos realizados:</strong> 14</p>
+        <button class="btn-primary" style="width: 100%; margin-top: 20px;">Editar Perfil</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal: Menú del Vendedor -->
+  <div id="vendor-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('vendor-modal')">&times;</span>
+      <h2 id="vendor-name">Nombre</h2>
+      <div class="vendor-info">
+        <span id="vendor-rating"></span>
+        <span id="vendor-type"></span>
+      </div>
+      <div id="vendor-menu" class="menu-list"></div>
+    </div>
+  </div>
+
+  <!-- Modal: Personalizar Producto -->
+  <div id="customize-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('customize-modal')">&times;</span>
+      <h2 id="product-name">Producto</h2>
+      <p id="product-price" class="price-highlight"></p>
+      <h3>Adicionales</h3>
+      <div id="extras-list" class="extras-container"></div>
+      <button id="confirm-order-btn" class="btn-primary order-button">Confirmar y Pedir</button>
+    </div>
+  </div>
+
+  <!-- Modal: Estado del Pedido y Calificación -->
+  <div id="status-modal" class="modal">
+    <div class="modal-content center-content">
+      <h2>¡Pedido en marcha! 🛵</h2>
+      <p>Tu comida se está preparando en <strong id="status-vendor"></strong>.</p>
+      <div class="eta-box">
+        <span class="eta-time" id="eta-time">15 min</span>
+        <span>Tiempo estimado de entrega</span>
+      </div>
+      <div class="rating-section">
+        <h3>Califica al vendedor</h3>
+        <div class="stars" id="star-rating">
+          <span data-val="1">★</span><span data-val="2">★</span><span data-val="3">★</span><span data-val="4">★</span><span data-val="5">★</span>
+        </div>
+        <p id="rating-feedback"></p>
+      </div>
+      <button class="btn-secondary" onclick="closeModal('status-modal')">Volver al inicio</button>
+    </div>
+  </div>
+
+  <!-- Barra de Navegación Inferior -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchTab('tab-inicio', this)">🏠 Inicio</button>
+    <button class="nav-item" onclick="switchTab('tab-explorar', this)">🗺️ Explorar</button>
+    <button class="nav-item" onclick="switchTab('tab-perfil', this)">👤 Perfil</button>
+  </nav>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
