@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-// Síntesis de audio para microinteracciones (El "Pop" táctil y la Alerta de Pago)
+// 1. Efectos de Sonido (Pop táctil y Timbre de Pago)
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 function playPop() {
   if(audioCtx.state === 'suspended') audioCtx.resume();
@@ -26,150 +26,74 @@ function playSuccessChime() {
   osc.stop(audioCtx.currentTime + 0.3);
 }
 
-// 1. Base de datos Piloto Chapinero (Representando los 15 vendedores)
-const vendedores = [
-  {
-    id: 1, name: "Hamburguesas El Gordo", type: "Para el bajón", rating: "4.9", badges: ["🔥 Alta Demanda", "Salsa Legendaria"], lat: 4.6320, lng: -74.0600,
-    menu: [
-      { 
-        id: 'm1', item: "Burger Clásica", basePrice: 12000, 
-        paidExtras: [{ name: "Tocineta", price: 2000 }, { name: "Queso Extra", price: 1500 }],
-        freeModifiers: ["Sin cebolla", "Salsa de ajo", "Solo salsa rosada"]
-      }
-    ]
-  },
-  {
-    id: 2, name: "Arepas Rellenas Doña Rosa", type: "Fritos", rating: "4.8", badges: ["Porciones Gigantes"], lat: 4.6280, lng: -74.0640,
-    menu: [
-      { 
-        id: 'm2', item: "Arepa Desmechada", basePrice: 9500, 
-        paidExtras: [{ name: "Suero Costeño", price: 1500 }, { name: "Adición de Carne", price: 3000 }],
-        freeModifiers: ["Bien tostada", "Sin mantequilla"]
-      }
-    ]
-  }
-];
+// 2. Inicializar Mapa (Estilo claro/urbano similar a las fotos)
+const map = L.map('main-map', { zoomControl: false }).setView([4.5980, -74.0760], 16);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
 
-// 2. Inicializar Mapa con tiles Oscuros
-const map = L.map('map', { zoomControl: false }).setView([4.6297, -74.0640], 14);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+// Coordenadas simuladas para la ruta de la foto
+const userLocation = [4.5960, -74.0750];
+const vendorLocation = [4.6000, -74.0770];
 
-// Renderizar Vendedores (Llama si hay alta demanda)
-vendedores.forEach(v => {
-  const isHot = v.badges.includes("🔥 Alta Demanda");
-  const iconHtml = `<div style="font-size: 24px; animation: ${isHot ? 'pulse 1s infinite' : 'none'}">${isHot ? '🔥🍔' : '🍔'}</div>`;
-  const customIcon = L.divIcon({ className: 'custom-icon', html: iconHtml });
-  
-  const marker = L.marker([v.lat, v.lng], { icon: customIcon }).addTo(map);
-  marker.on('click', () => { playPop(); openVendorModal(v); });
-  
-  // Agregar al feed
-  document.getElementById('feed-vendedores').innerHTML += `
-    <div class="vendor-card" onclick="playPop(); openVendorFromFeed(${v.id})">
-      <h3 style="color: #FFDB58;">${v.name}</h3>
-      <p>⭐ ${v.rating} • <span class="neon-text-magenta">${v.badges.join(', ')}</span></p>
-    </div>
-  `;
-});
+// Marcadores personalizados (Azul = Usuario, Naranja = Vendedor)
+const userIcon = L.divIcon({ className: 'custom-pin', html: '<div style="background:#00BFFF; width:20px; height:20px; border-radius:50%; border:3px solid white; box-shadow:0 0 5px rgba(0,0,0,0.5);"></div>' });
+const vendorIcon = L.divIcon({ className: 'custom-pin', html: '<div style="background:#D05B39; width:20px; height:20px; border-radius:50%; border:3px solid white; box-shadow:0 0 5px rgba(0,0,0,0.5);"></div>' });
 
-// 3. Lógica de Navegación
-window.switchTab = function(tabId, btnElement) {
+L.marker(userLocation, { icon: userIcon }).addTo(map).bindTooltip("Tu ubicación actual", { permanent: true, direction: 'bottom', className: 'map-tooltip-blue' });
+L.marker(vendorLocation, { icon: vendorIcon }).addTo(map).bindTooltip("Arepas Don Leo", { permanent: true, direction: 'bottom', className: 'map-tooltip-orange' });
+
+// Dibujar la línea de ruta (Color dorado como en la foto)
+const routeLine = L.polyline([userLocation, [4.5960, -74.0770], vendorLocation], { color: '#C89B3C', weight: 5, opacity: 0.8 }).addTo(map);
+
+// 3. Control de Vistas y Flujo
+window.goHome = function() {
   playPop();
-  document.querySelectorAll('.tab-view').forEach(tab => tab.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  btnElement.classList.add('active');
-  if(tabId === 'tab-explorar') setTimeout(() => map.invalidateSize(), 100);
+  document.getElementById('view-map').classList.remove('active');
+  document.getElementById('view-home').classList.add('active');
 }
 
-// 4. Modales y Arma tu Plato
-window.closeModal = function(modalId) { playPop(); document.getElementById(modalId).classList.remove('show'); }
-window.openVendorFromFeed = function(id) { openVendorModal(vendedores.find(v => v.id === id)); }
-
-let currentItem = null;
-let orderTotal = 0;
-
-function openVendorModal(v) {
-  document.getElementById('vendor-name').innerText = v.name;
-  document.getElementById('vendor-badges').innerHTML = v.badges.map(b => `<span class="chip">${b}</span>`).join('');
-  const menuContainer = document.getElementById('vendor-menu');
-  menuContainer.innerHTML = '';
-  
-  v.menu.forEach(m => {
-    const div = document.createElement('div');
-    div.className = 'menu-item';
-    div.innerHTML = `<div><h4>${m.item}</h4></div><div class="price-highlight">$${m.basePrice}</div>`;
-    div.onclick = () => { playPop(); openCustomizeModal(m); };
-    menuContainer.appendChild(div);
-  });
-  document.getElementById('vendor-modal').classList.add('show');
+window.goToMapRoute = function() {
+  playPop();
+  document.getElementById('view-home').classList.remove('active');
+  document.getElementById('view-map').classList.add('active');
+  document.getElementById('sheet-checkout').classList.remove('active');
+  document.getElementById('sheet-route').classList.add('active');
+  setTimeout(() => { map.invalidateSize(); map.fitBounds(routeLine.getBounds(), { padding: [50, 50] }); }, 100);
 }
 
-function openCustomizeModal(item) {
-  currentItem = item;
-  orderTotal = item.basePrice;
-  document.getElementById('product-name').innerText = item.item;
-  updateTotalDisplay();
-  
-  // Renderizar Adicionales con Costo (Checkboxes para el prototipo)
-  const paidContainer = document.getElementById('paid-extras');
-  paidContainer.innerHTML = item.paidExtras.map((ext, i) => `
-    <div class="control-row">
-      <label><input type="checkbox" class="extra-cb" data-price="${ext.price}"> ${ext.name}</label>
-      <span style="color:#FFDB58">+$${ext.price}</span>
-    </div>
-  `).join('');
-
-  // Escuchar cambios de precio
-  document.querySelectorAll('.extra-cb').forEach(cb => {
-    cb.addEventListener('change', (e) => {
-      playPop();
-      orderTotal += e.target.checked ? parseInt(e.target.dataset.price) : -parseInt(e.target.dataset.price);
-      updateTotalDisplay();
-    });
-  });
-
-  // Renderizar Modificadores Gratuitos
-  const freeContainer = document.getElementById('free-modifiers');
-  freeContainer.innerHTML = item.freeModifiers.map(mod => `
-    <div class="control-row"><label><input type="checkbox" onclick="playPop()"> ${mod}</label></div>
-  `).join('');
-
-  document.getElementById('customize-modal').classList.add('show');
+window.showCheckout = function() {
+  playPop();
+  document.getElementById('sheet-route').classList.remove('active');
+  document.getElementById('sheet-checkout').classList.add('active');
 }
 
-function updateTotalDisplay() {
-  document.getElementById('product-price').innerText = `Total: $${orderTotal}`;
-}
-
-// 5. Motor de Pagos, Split y Pantalla Antifraude
-document.getElementById('confirm-order-btn').onclick = () => {
-  const orderNumber = Math.floor(100 + Math.random() * 900); // 3 dígitos vibrantes
-  const isDelivery = document.querySelector('input[name="delivery-type"]:checked').value === 'delivery';
-  const finalTotal = isDelivery ? orderTotal + 4000 : orderTotal;
-
-  // Cerrar modales
-  closeModal('customize-modal');
-  closeModal('vendor-modal');
-
-  // Trigger Pantalla Verde Antifraude
+// 4. Integración Antifraude (Requisito del texto)
+window.processPayment = function() {
   playSuccessChime();
-  document.getElementById('success-amount').innerText = `$${finalTotal} COP`;
+  const orderNumber = Math.floor(100 + Math.random() * 900);
+  document.getElementById('success-amount').innerText = "$16.500 COP";
   document.getElementById('order-number-display').innerText = orderNumber;
   document.getElementById('success-screen').classList.add('show');
-
-  // Actualizar Fila Virtual (Pick-up)
-  document.getElementById('active-order-container').className = '';
-  document.getElementById('active-order-container').innerHTML = `
-    <div class="pickup-screen">
-      <h3 style="color: black;">ORDEN #${orderNumber}</h3>
-      <p>Muéstrale esta pantalla al vendedor</p>
-      ${isDelivery ? '<p style="margin-top:10px; font-size:0.8rem">🏍️ Repartidor en camino</p>' : '<p style="margin-top:10px; font-size:0.8rem">🚶‍♂️ Fila Virtual Activa: Acércate al puesto</p>'}
-    </div>
-  `;
-};
+}
 
 window.closeSuccessScreen = function() {
+  playPop();
   document.getElementById('success-screen').classList.remove('show');
-  switchTab('tab-pedido', document.querySelectorAll('.nav-item')[2]);
-};
+  goHome();
+}
+
+window.openProduct = function(name, price) {
+  playPop();
+  // En la app real, esto abriría el modal de "Arma tu plato"
+  // Por ahora, salta directamente al mapa de ruta para acelerar el prototipo
+  goToMapRoute();
+}
+
+// Estilos dinámicos inyectados para los Tooltips del mapa
+const style = document.createElement('style');
+style.innerHTML = `
+  .map-tooltip-blue { background-color: #00BFFF; color: white; border: none; border-radius: 15px; font-weight: bold; }
+  .map-tooltip-blue::before { border-bottom-color: #00BFFF; }
+  .map-tooltip-orange { background-color: #D05B39; color: white; border: none; border-radius: 15px; font-weight: bold; }
+  .map-tooltip-orange::before { border-bottom-color: #D05B39; }
+`;
+document.head.appendChild(style);
