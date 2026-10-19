@@ -88,7 +88,7 @@ function renderFeed() {
   const container = document.getElementById('feed-container');
   container.innerHTML = vendorsData.map(v => `
     <div class="vendor-feed-card" onclick="openVendor(${v.id})">
-      <img src="${v.heroImg}" class="vendor-feed-img" alt="${v.name}">
+      <img src="${v.heroImg}" class="vendor-feed-img" alt="${v.name}" onerror="this.src='https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=600&q=80'">
       <h2 class="vendor-feed-title">${v.name}</h2>
       <p class="rating">⭐ <strong>${v.rating}</strong> (${v.reviews} reseñas) • 📍 ${v.address.split(',')[1]}</p>
     </div>
@@ -99,7 +99,10 @@ window.openVendor = function(id) {
   playPop();
   currentVendor = vendorsData.find(v => v.id === id);
   
-  document.getElementById('vendor-hero').src = currentVendor.heroImg;
+  const heroImgEl = document.getElementById('vendor-hero');
+  heroImgEl.src = currentVendor.heroImg;
+  heroImgEl.onerror = function() { this.src = 'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=600&q=80'; };
+  
   document.getElementById('vendor-title').innerText = currentVendor.name;
   document.getElementById('vendor-rating').innerText = `${currentVendor.rating} opinión`;
   document.getElementById('vendor-reviews').innerText = `(${currentVendor.reviews} reseñas)`;
@@ -107,10 +110,10 @@ window.openVendor = function(id) {
   document.getElementById('vendor-address-desc').innerText = currentVendor.address;
   document.getElementById('map-eta').innerText = `⏱ ${currentVendor.eta}`;
 
-  // Llenar menú exclusivo
+  // Llenar menú exclusivo con manejo de imágenes rotas
   document.getElementById('vendor-menu-container').innerHTML = currentVendor.menu.map(m => `
     <div class="menu-card" onclick="openCustomizationModal('${m.id}')">
-      <img src="${m.img}" alt="${m.name}">
+      <img src="${m.img}" alt="${m.name}" onerror="this.src='https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=300&q=80'">
       <h4>${m.name}<br>($${m.price.toLocaleString()} COP)</h4>
       <p>${m.desc}</p>
     </div>
