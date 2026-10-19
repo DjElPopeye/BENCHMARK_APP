@@ -9,198 +9,217 @@
 </head>
 <body>
   
-  <!-- VISTA 1: FEED DE LOCALES (Nuevo Inicio) -->
-  <section id="view-feed" class="view active">
-    <header class="calleo-header">
-      <h1>Calle<span style="color:#D05B39;">📍</span></h1>
-    </header>
-    <div class="content-scroll">
-      <h3 class="section-title">Locales cerca de ti</h3>
-      <div id="feed-container">
-        <!-- El catálogo de locales se inyectará desde JavaScript -->
-      </div>
-    </div>
-  </section>
-
-  <!-- VISTA 2: PERFIL DEL VENDEDOR DINÁMICO -->
-  <section id="view-vendor" class="view">
-    <button class="btn-back" style="position:relative; margin: 15px 20px; width: max-content; top: 0; left: 0;" onclick="goBackToFeed()">← Volver a locales</button>
+  <!-- CONTENEDOR TIPO CELULAR (Visible en PC, nativo en móvil) -->
+  <div id="mobile-frame">
     
-    <div class="content-scroll">
-      <div class="hero-image">
-        <img id="vendor-hero" src="" alt="Foto del local">
+    <!-- VISTA 1: FEED DE LOCALES (Nuevo Inicio) -->
+    <section id="view-feed" class="view active">
+      <header class="calleo-header">
+        <h1>Calle<span style="color:#D05B39;">📍</span></h1>
+      </header>
+      <div class="content-scroll">
+        <h3 class="section-title">Locales cerca de ti</h3>
+        <div id="feed-container">
+          <!-- El catálogo de locales se inyectará desde JavaScript -->
+        </div>
       </div>
+    </section>
+
+    <!-- VISTA 2: PERFIL DEL VENDEDOR DINÁMICO -->
+    <section id="view-vendor" class="view">
+      <button class="btn-back" style="position:relative; margin: 15px 20px; width: max-content; top: 0; left: 0;" onclick="goBackToFeed()">← Volver a locales</button>
       
-      <div class="vendor-header">
-        <h2 id="vendor-title">Nombre Local</h2>
-        <p class="rating">⭐ <strong style="color: #B8862D;" id="vendor-rating">0.0 opinión</strong> <span class="reviews" id="vendor-reviews">(0 reseñas)</span></p>
-      </div>
-
-      <div class="mini-map-card">
-        <div class="mini-map-img">📍</div>
-        <div class="mini-map-text">
-          <strong id="vendor-address-title">Ubicación: </strong><br>
-          <span id="vendor-address-desc">Dirección</span>
+      <div class="content-scroll">
+        <div class="hero-image">
+          <img id="vendor-hero" src="" alt="Foto del local">
         </div>
-      </div>
+        
+        <div class="vendor-header">
+          <h2 id="vendor-title">Nombre Local</h2>
+          <p class="rating">⭐ <strong style="color: #B8862D;" id="vendor-rating">0.0 opinión</strong> <span class="reviews" id="vendor-reviews">(0 reseñas)</span></p>
+        </div>
 
-      <h3 class="section-title">Menú destacado</h3>
-      <div class="horizontal-scroll" id="vendor-menu-container">
-        <!-- Los platos exclusivos se inyectarán aquí -->
-      </div>
-
-      <button class="btn-primary" onclick="goToMapRoute()">¿Cómo llegar?</button>
-
-      <h3 class="section-title">Reseñas de clientes</h3>
-      <div class="horizontal-scroll" style="margin-bottom: 20px;" id="vendor-reviews-container">
-        <!-- Las reseñas se inyectarán aquí -->
-      </div>
-    </div>
-  </section>
-
-  <!-- VISTA 3: MAPA DE RUTA Y CHECKOUT (Fila Virtual) -->
-  <section id="view-map" class="view">
-    <button class="btn-back" onclick="goBackToVendor()">← Regresar</button>
-    <div id="main-map"></div>
-    
-    <div id="sheet-route" class="bottom-sheet active">
-      <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <h3>Tiempo de distancia</h3>
-        <span class="time-eta" id="map-eta">⏱ Calculando...</span>
-      </div>
-      <button class="btn-primary" onclick="showCheckout()">IR A COMPRAR</button>
-    </div>
-
-    <div id="sheet-checkout" class="bottom-sheet">
-      <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <h3>Tu pedido</h3>
-        <span class="time-eta">⏱ 10 minutos</span>
-      </div>
-      <div class="checkout-items" id="checkout-items-container">
-        <!-- Productos seleccionados -->
-      </div>
-      <button class="btn-primary btn-red" onclick="processPayment()">
-        <span style="float:left">Total a pagar</span>
-        <span style="float:right; font-size:1.3rem;" id="checkout-total">$0</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- VISTA 4: MIS COMPRAS -->
-  <section id="view-compras" class="view">
-    <header class="calleo-header"><h1>Mis Compras</h1></header>
-    <div class="content-scroll">
-      <div class="purchase-history">
-        <div class="purchase-item" onclick="showInvoice('Arepas Don Leo', '18 de Oct, 2026', '19:30', 'Nequi', '$16.500')">
-          <div class="purchase-info">
-             <h4>Arepas Don Leo</h4>
-             <p>1x Arepa de Pabellón</p>
-             <p class="date">18 Oct 2026</p>
+        <div class="mini-map-card">
+          <div class="mini-map-img">📍</div>
+          <div class="mini-map-text">
+            <strong id="vendor-address-title">Ubicación: </strong><br>
+            <span id="vendor-address-desc">Dirección</span>
           </div>
-          <div class="purchase-price">$16.500</div>
         </div>
-        <div class="purchase-item" onclick="showInvoice('Hamburguesas El Gordo', '15 de Oct, 2026', '21:15', 'Tarjeta de Crédito', '$22.000')">
-           <div class="purchase-info">
-             <h4>Hamburguesas El Gordo</h4>
-             <p>1x Burger Doble Carne</p>
-             <p class="date">15 Oct 2026</p>
+
+        <h3 class="section-title">Menú destacado</h3>
+        <div class="horizontal-scroll" id="vendor-menu-container">
+          <!-- Los platos exclusivos se inyectarán aquí -->
+        </div>
+
+        <button class="btn-primary" onclick="goBackToFeed()" style="background:#C89B3C;">Ver otros locales</button>
+
+        <h3 class="section-title">Reseñas de clientes</h3>
+        <div class="horizontal-scroll" style="margin-bottom: 20px;" id="vendor-reviews-container">
+          <!-- Las reseñas se inyectarán aquí -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA 3: MAPA DE RUTA Y CHECKOUT (Fila Virtual) -->
+    <section id="view-map" class="view">
+      <button class="btn-back" onclick="goBackToVendor()">← Regresar</button>
+      <div id="main-map"></div>
+      
+      <!-- Bottom Sheet 1: Personalizar Plato -->
+      <div id="sheet-customize" class="bottom-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header" style="flex-direction:column; align-items:flex-start;">
+          <h3 id="cust-title" style="font-size:1.4rem;">Personalizar</h3>
+          <p id="cust-desc" style="color:#666; font-size:0.85rem; font-weight:normal;"></p>
+        </div>
+        <h4 style="margin-bottom:10px; color:#B8862D;">Agrega ingredientes adicionales:</h4>
+        <div id="cust-extras" class="extras-list">
+           <!-- Checkboxes inyectados aquí -->
+        </div>
+        <button class="btn-primary btn-red" onclick="addToOrderAndGoMap()">
+          <span style="float:left">Agregar al pedido</span>
+          <span style="float:right; font-size:1.3rem;" id="cust-total">$0</span>
+        </button>
+      </div>
+
+      <!-- Bottom Sheet 2: Tiempo de distancia -->
+      <div id="sheet-route" class="bottom-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <h3>Tiempo de distancia</h3>
+          <span class="time-eta" id="map-eta">⏱ Calculando...</span>
+        </div>
+        <button class="btn-primary" onclick="showCheckout()">IR A COMPRAR</button>
+      </div>
+
+      <!-- Bottom Sheet 3: Checkout -->
+      <div id="sheet-checkout" class="bottom-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <h3>Tu pedido</h3>
+          <span class="time-eta">⏱ 10 minutos</span>
+        </div>
+        <div class="checkout-items" id="checkout-items-container">
+          <!-- Productos seleccionados -->
+        </div>
+        <button class="btn-primary btn-red" onclick="processPayment()">
+          <span style="float:left">Pagar (Bre-B / Nequi)</span>
+          <span style="float:right; font-size:1.3rem;" id="checkout-total">$0</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- VISTA 4: MIS COMPRAS -->
+    <section id="view-compras" class="view">
+      <header class="calleo-header"><h1>Mis Compras</h1></header>
+      <div class="content-scroll">
+        <div class="purchase-history">
+          <div class="purchase-item" onclick="showInvoice('Arepas Don Leo', '18 de Oct, 2026', '19:30', 'Nequi', '$18.500')">
+            <div class="purchase-info">
+               <h4>Arepas Don Leo</h4>
+               <p>1x Arepa Pabellón (+ Queso)</p>
+               <p class="date">18 Oct 2026</p>
+            </div>
+            <div class="purchase-price">$18.500</div>
           </div>
-          <div class="purchase-price">$22.000</div>
+          <div class="purchase-item" onclick="showInvoice('Hamburguesas El Gordo', '15 de Oct, 2026', '21:15', 'Tarjeta de Crédito', '$25.000')">
+             <div class="purchase-info">
+               <h4>Hamburguesas El Gordo</h4>
+               <p>1x Burger Doble Carne (+ Tocineta)</p>
+               <p class="date">15 Oct 2026</p>
+            </div>
+            <div class="purchase-price">$25.000</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-   <!-- VISTA 5: GUARDADOS -->
-  <section id="view-guardados" class="view">
-    <header class="calleo-header"><h1>Guardados</h1></header>
-    <div class="content-scroll">
-      <div class="saved-items-grid">
-         <div class="menu-card">
-          <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=300&q=80" alt="Arepa">
-          <h4>Arepa de Pabellón<br>($16.500 COP)</h4>
-          <p>Arepas Don Leo</p>
-        </div>
-        <div class="menu-card">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80" alt="Burger">
-          <h4>Burger Clásica<br>($15.000 COP)</h4>
-          <p>Hamburguesas El Gordo</p>
-        </div>
-        <div class="menu-card">
-          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=300&q=80" alt="Pizza">
-          <h4>Porción Pepperoni<br>($7.000 COP)</h4>
-          <p>Pizzas La Esquina</p>
+     <!-- VISTA 5: GUARDADOS -->
+    <section id="view-guardados" class="view">
+      <header class="calleo-header"><h1>Guardados</h1></header>
+      <div class="content-scroll">
+        <div class="saved-items-grid">
+           <div class="menu-card">
+            <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=300&q=80" alt="Arepa">
+            <h4>Arepa de Pabellón<br>($16.500 COP)</h4>
+            <p>Arepas Don Leo</p>
+          </div>
+          <div class="menu-card">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80" alt="Burger">
+            <h4>Burger Clásica<br>($15.000 COP)</h4>
+            <p>Hamburguesas El Gordo</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-   <!-- VISTA 6: MI PERFIL -->
-  <section id="view-perfil" class="view">
-    <header class="calleo-header"><h1>Mi Perfil</h1></header>
-    <div class="content-scroll">
-      <div class="profile-header-container">
-        <div class="profile-avatar">🦉</div>
-        <h2>Carlos Comensal</h2>
-        <p class="title-badge">Catador Nocturno</p>
+     <!-- VISTA 6: MI PERFIL -->
+    <section id="view-perfil" class="view">
+      <header class="calleo-header"><h1>Mi Perfil</h1></header>
+      <div class="content-scroll">
+        <div class="profile-header-container">
+          <div class="profile-avatar">🦉</div>
+          <h2>Carlos Comensal</h2>
+          <p class="title-badge">Catador Nocturno</p>
+        </div>
+        <div class="profile-details-card">
+           <p><strong>Celular:</strong> +57 300 123 4567</p>
+           <p><strong>Dirección:</strong> Cra 15 # 85-22, Bogotá</p>
+           <p><strong>Método de pago:</strong> Nequi (***4567)</p>
+           <button class="btn-outline">Editar Información</button>
+        </div>
+        <h3 class="section-title">Insignias</h3>
+         <div class="badges-grid">
+          <div class="badge">🔥<span>Caza-Salsas</span></div>
+          <div class="badge">🗺️<span>Explorador</span></div>
+        </div>
       </div>
-      <div class="profile-details-card">
-         <p><strong>Celular:</strong> +57 300 123 4567</p>
-         <p><strong>Dirección:</strong> Cra 15 # 85-22, Bogotá</p>
-         <p><strong>Método de pago:</strong> Nequi (***4567)</p>
-         <button class="btn-outline">Editar Información</button>
+    </section>
+
+    <!-- PANTALLA VERDE: Datáfono Virtual Antifraude -->
+    <div id="success-screen" class="full-screen-success">
+      <h1>✅</h1>
+      <h2>PAGO APROBADO</h2>
+      <p class="split-text">Bre-B / Nequi</p>
+      <p id="success-amount" style="font-size: 2.5rem; font-weight: bold; margin: 20px 0;"></p>
+      <p>Orden Pick-Up #<span id="order-number-display" style="color: #FF00FF; font-size: 3rem;"></span></p>
+      <p style="margin-top: 20px;">Muestra esta pantalla al vendedor.</p>
+      <button class="btn-dark" onclick="closeSuccessScreen()">Volver al Inicio</button>
+    </div>
+
+    <!-- MODAL DE FACTURA -->
+    <div id="invoice-modal" class="modal-overlay">
+      <div class="invoice-content">
+         <span class="close-btn" onclick="closeInvoice()">&times;</span>
+         <h2>Recibo de Compra</h2>
+         <hr>
+         <p><strong>Local:</strong> <span id="inv-vendor"></span></p>
+         <p><strong>Fecha:</strong> <span id="inv-date"></span></p>
+         <p><strong>Hora:</strong> <span id="inv-time"></span></p>
+         <p><strong>Método de Pago:</strong> <span id="inv-method"></span></p>
+         <hr>
+         <h3 style="text-align:center; margin-top:10px;">Total: <span id="inv-total" style="color:#D05B39"></span></h3>
       </div>
-      <h3 class="section-title">Insignias</h3>
-       <div class="badges-grid">
-        <div class="badge">🔥<span>Caza-Salsas</span></div>
-        <div class="badge">🗺️<span>Explorador</span></div>
+    </div>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <nav class="bottom-nav">
+      <div class="nav-item active" onclick="switchView('view-feed', this)">
+        <div class="icon">🏠</div><span>Inicio</span>
       </div>
-    </div>
-  </section>
+      <div class="nav-item" onclick="switchView('view-compras', this)">
+        <div class="icon">🛍️</div><span>Mis compras</span>
+      </div>
+      <div class="nav-item" onclick="switchView('view-guardados', this)">
+        <div class="icon">🔖</div><span>Guardados</span>
+      </div>
+      <div class="nav-item" onclick="switchView('view-perfil', this)">
+        <div class="icon">😊</div><span>Mi perfil</span>
+      </div>
+    </nav>
 
-  <!-- PANTALLA VERDE: Datáfono Virtual Antifraude -->
-  <div id="success-screen" class="full-screen-success">
-    <h1>✅</h1>
-    <h2>PAGO APROBADO</h2>
-    <p class="split-text">Bre-B / Nequi</p>
-    <p id="success-amount" style="font-size: 2.5rem; font-weight: bold; margin: 20px 0;"></p>
-    <p>Orden Pick-Up #<span id="order-number-display" style="color: #FF00FF; font-size: 3rem;"></span></p>
-    <p style="margin-top: 20px;">Muestra esta pantalla al vendedor.</p>
-    <button class="btn-dark" onclick="closeSuccessScreen()">Volver al Inicio</button>
-  </div>
-
-  <!-- MODAL DE FACTURA -->
-  <div id="invoice-modal" class="modal-overlay">
-    <div class="invoice-content">
-       <span class="close-btn" onclick="closeInvoice()">&times;</span>
-       <h2>Recibo de Compra</h2>
-       <hr>
-       <p><strong>Local:</strong> <span id="inv-vendor"></span></p>
-       <p><strong>Fecha:</strong> <span id="inv-date"></span></p>
-       <p><strong>Hora:</strong> <span id="inv-time"></span></p>
-       <p><strong>Método de Pago:</strong> <span id="inv-method"></span></p>
-       <hr>
-       <h3 style="text-align:center; margin-top:10px;">Total: <span id="inv-total" style="color:#D05B39"></span></h3>
-    </div>
-  </div>
-
-  <!-- NAVEGACIÓN INFERIOR -->
-  <nav class="bottom-nav">
-    <div class="nav-item active" onclick="switchView('view-feed', this)">
-      <div class="icon">🏠</div><span>Inicio</span>
-    </div>
-    <div class="nav-item" onclick="switchView('view-compras', this)">
-      <div class="icon">🛍️</div><span>Mis compras</span>
-    </div>
-    <div class="nav-item" onclick="switchView('view-guardados', this)">
-      <div class="icon">🔖</div><span>Guardados</span>
-    </div>
-    <div class="nav-item" onclick="switchView('view-perfil', this)">
-      <div class="icon">😊</div><span>Mi perfil</span>
-    </div>
-  </nav>
+  </div> <!-- FIN CELULAR -->
 
   <script type="module" src="/src/main.js"></script>
 </body>
