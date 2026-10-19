@@ -1,9 +1,20 @@
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
-body { background-color: #F9F6F0; color: #333; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-.view { display: none; height: 100%; width: 100%; padding-bottom: 80px; flex-direction: column; }
+/* SISTEMA FRAME DE CELULAR (Para visualizar en PC o Web) */
+body { background-color: #F9F6F0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+
+#mobile-frame { width: 100%; height: 100%; background: #F9F6F0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+/* Media query: Si la pantalla es grande, dibuja el marco del celular */
+@media (min-width: 600px) {
+  body { background-color: #e5e7eb; }
+  #mobile-frame { width: 390px; height: 844px; border: 14px solid #1a1a1a; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+}
+
+/* Vistas */
+.view { display: none; height: 100%; width: 100%; padding-bottom: 80px; flex-direction: column; position: absolute; top:0; left:0; background: #F9F6F0;}
 .view.active { display: flex; }
-.content-scroll { overflow-y: auto; padding: 0 20px; }
+.content-scroll { overflow-y: auto; padding: 0 20px; height: 100%; }
 
 .calleo-header { padding: 15px 20px; }
 .calleo-header h1 { font-size: 1.8rem; color: #333; display: flex; align-items: center; gap: 5px; }
@@ -11,11 +22,11 @@ body { background-color: #F9F6F0; color: #333; display: flex; flex-direction: co
 /* Feed de locales */
 .vendor-feed-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; }
 .vendor-feed-card:active { transform: scale(0.98); }
-.vendor-feed-img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+.vendor-feed-img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; background: #eee; }
 .vendor-feed-title { color: #B8862D; font-size: 1.4rem; margin-bottom: 5px; }
 
 /* Perfil Vendedor */
-.hero-image img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; }
+.hero-image img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; background: #eee;}
 .vendor-header { margin: 15px 0; }
 .vendor-header h2 { color: #B8862D; font-size: 1.6rem; }
 .rating { color: #B8862D; font-size: 0.9rem; margin-top: 5px; }
@@ -41,11 +52,15 @@ body { background-color: #F9F6F0; color: #333; display: flex; flex-direction: co
 .btn-outline { background: transparent; border: 2px solid #D05B39; color: #D05B39; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 15px;}
 .btn-back { background: #C89B3C; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; z-index: 1000; cursor: pointer; }
 
+/* Checkboxes Extras */
+.extras-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;}
+.extra-item { display: flex; justify-content: space-between; background: white; padding: 10px; border-radius: 10px; border: 1px solid #eee;}
+
 /* Mapa y Rutas */
 #main-map { height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
 #view-map .btn-back { position: absolute; top: 20px; left: 20px; }
 
-.bottom-sheet { position: absolute; bottom: 80px; left: 5%; width: 90%; background: #F9F6F0; z-index: 1000; border-radius: 25px; padding: 20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); display: none; flex-direction: column; }
+.bottom-sheet { position: absolute; bottom: 80px; left: 5%; width: 90%; background: #F9F6F0; z-index: 1000; border-radius: 25px; padding: 20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.15); display: none; flex-direction: column; }
 .bottom-sheet.active { display: flex; animation: slideUp 0.3s ease-out; }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .sheet-handle { width: 40px; height: 5px; background: #ccc; border-radius: 5px; margin: 0 auto 15px; }
@@ -54,13 +69,13 @@ body { background-color: #F9F6F0; color: #333; display: flex; flex-direction: co
 .item-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 500; font-size: 0.95rem; }
 
 /* Navegación Inferior */
-.bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 15px 0 25px 0; border-top: 1px solid #eee; z-index: 3000; }
+.bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 15px 0 25px 0; border-top: 1px solid #eee; z-index: 3000; }
 .nav-item { display: flex; flex-direction: column; align-items: center; color: #999; font-size: 0.75rem; cursor: pointer; }
 .nav-item.active { color: #B8862D; font-weight: bold; }
 .nav-item .icon { font-size: 1.5rem; margin-bottom: 3px; }
 
 /* Pantalla Antifraude */
-.full-screen-success { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #00E676; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: black; padding: 20px; }
+.full-screen-success { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #00E676; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: black; padding: 20px; }
 .full-screen-success.show { display: flex; }
 .full-screen-success h1 { font-size: 5rem; margin-bottom: 10px; }
 .split-text { font-weight: bold; background: rgba(255,255,255,0.5); padding: 5px 15px; border-radius: 15px; margin-top: 10px; }
@@ -82,7 +97,7 @@ body { background-color: #F9F6F0; color: #333; display: flex; flex-direction: co
 .badge { background: white; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #B8862D; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
 /* Modal Factura */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 5000; display: none; justify-content: center; align-items: center; }
+.modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 5000; display: none; justify-content: center; align-items: center; }
 .modal-overlay.show { display: flex; }
 .invoice-content { background: #F9F6F0; padding: 30px; border-radius: 20px; width: 85%; position: relative; }
 .invoice-content hr { border: none; border-top: 1px dashed #ccc; margin: 15px 0;}
