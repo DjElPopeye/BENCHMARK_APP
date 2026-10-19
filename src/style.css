@@ -3,12 +3,16 @@
 /* SISTEMA FRAME DE CELULAR (Para visualizar en PC o Web) */
 body { background-color: #F9F6F0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
 
-#mobile-frame { width: 100%; height: 100%; background: #F9F6F0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-
-/* Media query: Si la pantalla es grande, dibuja el marco del celular */
+/* Media query: Si la pantalla es grande (PC), dibuja el marco del celular y ajusta el zoom */
 @media (min-width: 600px) {
   body { background-color: #e5e7eb; }
-  #mobile-frame { width: 390px; height: 844px; border: 14px solid #1a1a1a; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  /* Reducido el tamaño máximo para que encaje mejor en pantallas de PC sin necesidad de hacer zoom out */
+  #mobile-frame { width: 375px; height: 812px; max-height: 90vh; border: 12px solid #1a1a1a; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); background: #F9F6F0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+}
+
+/* En dispositivos móviles, usa el 100% de la pantalla */
+@media (max-width: 599px) {
+  #mobile-frame { width: 100%; height: 100%; background: #F9F6F0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 }
 
 /* Vistas */
